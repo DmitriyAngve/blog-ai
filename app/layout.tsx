@@ -2,6 +2,7 @@ import "./globals.css";
 import { Open_Sans } from "next/font/google";
 import Navbar from "app/(shared)/Navbar";
 // If I doing routes for Next JS, I can start "import" from "app/" because that's how they configured it
+import Footer from "app/(shared)/Footer";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
