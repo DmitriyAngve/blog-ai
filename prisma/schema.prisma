@@ -15,4 +15,7 @@ model Post {
   id String @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  title String
+  category String
+  content String @db.Text
 }
