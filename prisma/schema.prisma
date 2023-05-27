@@ -11,7 +11,6 @@ datasource db {
 }
 
 // generate a random ID based on the unique ID generator that they have and (Look and Prisma schema docs how to setup your models)
-
 model Post {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
