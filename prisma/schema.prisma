@@ -1,0 +1,24 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+// generate a random ID based on the unique ID generator that they have and (Look and Prisma schema docs how to setup your models)
+model Post {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  category  String
+  content   String   @db.Text
+  author    String
+  image     String
+  snippet   String   @db.Text
+}
