@@ -12,7 +12,20 @@ export const revalidate = 60;
 // If I'll do getPosts => fetch call to the backend and fetch the data from the server that call the backend database, in which case we will directly call the database
 const getPosts = async () => {
   const posts = await prisma.post.findMany();
-  return posts;
+
+  const formattedPosts = await Promise.all(
+    posts.map(async (post: Post) => {
+      // static image import
+      const imageModule = require(`../public${post.image}`);
+      //  returning it as a image so modifying our post to have a different value (static import)
+      return {
+        ...post,
+        image: imageModule.default,
+      };
+    })
+  );
+
+  return formattedPosts;
 };
 
 // let's make this component "async" for creating server components
