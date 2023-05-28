@@ -19,7 +19,6 @@ const getPosts = async () => {
 export default async function Home() {
   // This is essentially a server component
   const posts = await getPosts();
-  console.log("posts:", posts);
   // This is essentially a server component
 
   const formatPosts = () => {
@@ -53,8 +52,8 @@ export default async function Home() {
       <div className="md:flex gap-10 mb-5">
         <div className="basis-3/4">
           <Tech techPosts={techPosts} />
-          <Travel />
-          <Other />
+          <Travel travelPosts={travelPosts} />
+          <Other otherPosts={otherPosts} />
           <div className="hidden md:block">
             <Subscribe />
           </div>
