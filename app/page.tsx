@@ -4,8 +4,20 @@ import Travel from "app/(home)/Travel";
 import Other from "app/(shared)/Other";
 import Subscribe from "app/(shared)/Subscribe";
 import Sidebar from "app/(shared)/Sidebar";
+import { prisma } from "./api/client";
 
-export default function Home() {
+// If I'll do getPosts => fetch call to the backend and fetch the data from the server that call the backend database, in which case we will directly call the database
+const getPosts = async () => {
+  const posts = await prisma.post.findMany();
+
+  return posts;
+};
+
+// let's make this component "async" for creating server components
+export default async function Home() {
+  // This is essentially a server component
+  const posts = await getPosts();
+  // This is essentially a server component
   return (
     <main className="px-10 leading-7">
       <Trending />
