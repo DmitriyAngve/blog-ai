@@ -56,7 +56,6 @@ export default async function Home() {
     return [trendingPosts, techPosts, travelPosts, otherPosts];
   };
 
-  // destr
   const [trendingPosts, techPosts, travelPosts, otherPosts] = formatPosts();
 
   return (
