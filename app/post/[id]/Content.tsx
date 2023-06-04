@@ -6,6 +6,7 @@ import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "next/image";
 import React, { useState } from "react";
+import EditorMenuBar from "./EditorMenuBar";
 
 type Props = { post: FormattedPost };
 
@@ -18,9 +19,24 @@ const Content = ({ post }: Props) => {
   const [content, setContent] = useState<string>(post.content);
   const [contentError, setContentError] = useState<string>("");
 
+  // const handleEnableEdit = () => [handleIsEditable];
+  const handleIsEditable = (bool: boolean) => {
+    setIsEditable(bool);
+    editor?.setEditable(bool);
+  };
+
+  const handleOnChangeContent = ({ editor }: any) => {
+    // content inside TipTap is empry we are going make sure there is no error here, so if I don't have anything in the content You're not going to have an error
+    if (!(editor as Editor).isEmpty) setContentError("");
+    // this is part of the TipTap Editor so you want to be able to get the HTML text and setting that to our content to "const [content, setContent] = useState<string>(post.content);" - in the content section
+    setContent((editor as Editor).getHTML());
+  };
+
   const editor = useEditor({
     extensions: [StarterKit],
-    content: "<p>Hello World!</p>",
+    onUpdate: handleOnChangeContent,
+    content: content,
+    editable: isEditable,
   });
 
   const handleSubmit = () => {};
@@ -29,6 +45,7 @@ const Content = ({ post }: Props) => {
     <div className="prose w-full max-w-full mb-10">
       {/* BREADCRUMBS */}
       <h5 className="text-wh-300">{`Home > ${post.category} > ${post.title}`}</h5>
+
       {/* CATEGORY AND EDIT */}
       <div className="flex justify-between items-center">
         <h4 className="bg-accent-orange py-2 px-5 text-wh-900 text-sm font-bold">
@@ -37,12 +54,12 @@ const Content = ({ post }: Props) => {
         <div className="mt-4">
           {isEditable ? (
             <div className="flex justify-between gap-3">
-              <button onClick={() => console.log("cancel edit")}>
+              <button onClick={() => handleIsEditable(!isEditable)}>
                 <XMarkIcon className="h-6 w-6 text-accent-red" />
               </button>
             </div>
           ) : (
-            <button onClick={() => console.log("make edit")}>
+            <button onClick={() => handleIsEditable(!isEditable)}>
               <PencilSquareIcon className="h-6 w-6 text-accent-red" />
             </button>
           )}
@@ -90,7 +107,12 @@ const Content = ({ post }: Props) => {
               : "w-full max-w-full"
           }
         >
-          {isEditable && <></>}
+          {isEditable && (
+            <>
+              <EditorMenuBar editor={editor} />
+              <hr className="border-1 mt-2 mb-5" />
+            </>
+          )}
           <EditorContent editor={editor} />
         </div>
 
