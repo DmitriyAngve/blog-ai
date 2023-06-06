@@ -50,6 +50,12 @@ const Content = ({ post }: Props) => {
   const editor = useEditor({
     extensions: [StarterKit],
     onUpdate: handleOnChangeContent,
+    editorProps: {
+      attributes: {
+        class:
+          "prose prose-sm xl:prose-2xl leading-8 focuse:outline-none -full max-w-full",
+      },
+    },
     content: content,
     editable: isEditable,
   });
