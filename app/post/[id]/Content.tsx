@@ -1,15 +1,17 @@
 "use client"; // this essentially will be a client component
-import SocialLinks from "@/app/(shared)/SocialLinks";
 import { FormattedPost } from "@/app/types";
+import React, { useState } from "react";
+import Image from "next/image";
+import SocialLinks from "@/app/(shared)/SocialLinks";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Image from "next/image";
-import React, { useState } from "react";
 import EditorMenuBar from "./EditorMenuBar";
 import CategoryAndEdit from "./CategoryAndEdit";
 import Article from "./Article";
 
-type Props = { post: FormattedPost };
+type Props = {
+  post: FormattedPost;
+};
 
 const Content = ({ post }: Props) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
@@ -26,7 +28,7 @@ const Content = ({ post }: Props) => {
 
   const date = new Date(post?.createdAt);
   const options = { year: "numeric", month: "long", day: "numeric" } as any;
-  const formattedDate = date.toLocaleDateString("en-Us", options);
+  const formattedDate = date.toLocaleDateString("en-US", options);
 
   // const handleEnableEdit = () => [handleIsEditable];
   const handleIsEditable = (bool: boolean) => {
@@ -53,14 +55,49 @@ const Content = ({ post }: Props) => {
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm xl:prose-2xl leading-8 focuse:outline-none -full max-w-full",
+          "prose prose-sm xl:prose-2xl leading-8 focus:outline-none w-full max-w-full",
       },
     },
     content: content,
     editable: isEditable,
   });
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // validation check first
+    if (title === "") setTitleError("This field is required.");
+    if (editor?.isEmpty) setContentError("This field is required.");
+    // do nothing if either of those are Empty
+    if (title === "" || editor?.isEmpty) return;
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/post/${post?.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+        }),
+      }
+    );
+    const data = await response.json();
+
+    // update the state (SUBMIT button)
+    handleIsEditable(false);
+    // reseting the values that we saved, because we not using it for cancel button
+    setTempTitle("");
+    setTempContent("");
+
+    // after that we want to set the title to be the data we get from the title
+    setTitle(data.title);
+    setContent(data.content);
+    // set the editor content
+    editor?.commands.setContent(data.content);
+  };
 
   return (
     <div className="prose w-full max-w-full mb-10">
@@ -92,6 +129,9 @@ const Content = ({ post }: Props) => {
                 onChange={handleOnChangeTitle}
                 value={title}
               />
+              {titleError && (
+                <p className="mt-1 text-primary-500">{titleError}</p>
+              )}
             </div>
           ) : (
             <h3 className="font-bold text-3xl mt-3">{title}</h3>
