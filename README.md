@@ -6,9 +6,10 @@ A Next.js 13 application that creates AI-powered blogs with ChatGPT-generated co
 
 - **Next.js**: The foundation of the project, providing server-side rendering and routing.
 - **React**: Used for building the user interface and managing the state of the application.
-- **Prisma**: An Object-Relational Mapping (ORM) tool used for database operations.
+- **TypeScript**: Improving code quality and productivity with static typing.
+- **Prisma**: Secure and efficient database operations with a type-safe query language.
+- **TailwindCSS**: A utility-first CSS framework for simplified and consistent styling.
 - **TipTap**: Implements a rich-text editor for composing styled blog posts.
-- **TailwindCSS**: Used for building custom designs quickly.
 - **Heroicons**: Enhances visual elements for use in navigation menus, user interface components, and more.
 
 [Explore the Live Demo](https://blog-ai-hdbu.vercel.app/)
