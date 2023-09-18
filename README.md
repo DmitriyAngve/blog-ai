@@ -1,6 +1,6 @@
 # Blog-AI Generator
 
-Complete AI Blog Next.js-13 application.
+A Next.js 13 application that creates AI-powered blogs with ChatGPT-generated content. It features a rich-text editor powered by TipTap and utilizes CSS Grid and Flexbox for versatile layouts. The design is fully responsive, ensuring a seamless experience on both desktop and mobile screens.
 
 ## Technologies Used
 
@@ -14,6 +14,9 @@ Complete AI Blog Next.js-13 application.
 [Live Demo](https://blog-ai-hdbu.vercel.app/)
 
 ## Features:
+- Each blog post is a standalone page.
+- Effortlessly edit blog post content.
+- Generate AI-driven content with the flexibility to choose the writer's role.
 
 ## Installation and Usage
 
