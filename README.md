@@ -11,7 +11,7 @@ A Next.js 13 application that creates AI-powered blogs with ChatGPT-generated co
 - **TailwindCSS**: Used for building custom designs quickly.
 - **Heroicons**: Enhances visual elements for use in navigation menus, user interface components, and more.
 
-[Live Demo](https://blog-ai-hdbu.vercel.app/)
+[Explore the Live Demo](https://blog-ai-hdbu.vercel.app/)
 
 ## Features:
 - Each blog post is a standalone page.
